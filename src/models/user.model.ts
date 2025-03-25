@@ -12,7 +12,7 @@ import {
 } from "typeorm";
 import Document from "./document.model";
 
-@Entity("user_table")
+@Entity("user_table_20")
 export class User {
   @PrimaryGeneratedColumn()
   id: number;

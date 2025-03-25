@@ -9,7 +9,7 @@ import {
 import { User } from "./user.model";
 import { MinLength } from "class-validator";
 
-@Entity("document")
+@Entity("document_table_19")
 export default class Document {
   @PrimaryGeneratedColumn()
   id: number;

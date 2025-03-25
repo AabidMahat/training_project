@@ -6,6 +6,18 @@ class DocumentRepository {
     const newDocument = getRepository(Document).create(document);
     return await getRepository(Document).save(newDocument);
   }
+
+  async getDocumentById(documentId: number) {
+    return await getRepository(Document).findOne({
+      where: {
+        id: documentId,
+      },
+    });
+  }
+
+  async saveDocument(document: Document) {
+    return await getRepository(Document).save(document);
+  }
 }
 
 export default new DocumentRepository();
