@@ -1,0 +1,31 @@
+{
+  "name": "training-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --watch \"./**/*.ts\" -e ts --exec \"npx ts-node src/index.ts\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/bcryptjs": "^3.0.0",
+    "@types/express": "^5.0.1",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/mssql": "^9.1.7",
+    "@types/multer": "^1.4.12",
+    "@types/socket.io": "^3.0.2",
+    "bcryptjs": "^3.0.2",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mssql": "^11.0.1",
+    "multer": "^1.4.5-lts.2",
+    "reflect-metadata": "^0.2.2",
+    "socket.io": "^4.8.1",
+    "typeorm": "^0.3.21"
+  }
+}
