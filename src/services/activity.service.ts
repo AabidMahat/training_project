@@ -9,10 +9,15 @@ class ActivityService {
   async logActivity(action: string, userId: number, documentId: number) {
     const user = (await authService.getUserById(userId)) as User;
     const document = (await documentService.getDocumentById(
-      documentId
+      documentId,
+      userId
     )) as Document;
 
     return await activityLogRepository.logActivity({ action, user, document });
+  }
+
+  async getActivities() {
+    return await activityLogRepository.getAllActivity();
   }
 }
 

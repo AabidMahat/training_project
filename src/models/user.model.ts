@@ -11,8 +11,9 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import Document from "./document.model";
+import { WorkSpaceUser } from "./workspaceUser.model";
 
-@Entity("user_table_20")
+@Entity("user_table_23")
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -60,6 +61,9 @@ export class User {
 
   @OneToMany(() => Document, (document) => document.user)
   documents: Document[];
+
+  @OneToMany(() => WorkSpaceUser, (workspaceUser) => workspaceUser.workspace)
+  workspaceUser: WorkSpaceUser[];
 
   chnagePasswordAfter(JWTTimestamp: number) {
     if (this.passwordChangeAt)
