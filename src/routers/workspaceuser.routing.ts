@@ -8,4 +8,8 @@ router.use(authMiddleware);
 
 router.route("/addUser/:workspaceId").post(workspaceUser.addUserToWorkspace);
 
+router
+  .route("/removeUser/:workspaceId/:userId")
+  .delete(workspaceUser.removeUserFromWorkspace);
+
 export { router as workspaceUserRouter };
