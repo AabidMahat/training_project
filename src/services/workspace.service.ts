@@ -24,22 +24,6 @@ class WorkspaceService {
     return await workspaceRepository.getUserWorkspace(userId);
   }
 
-  // async addDocumentToWorkspace(
-  //   workspaceId: string,
-  //   documentId: number,
-  //   userId: number
-  // ) {
-  //   const document = await documentService.getDocumentById(documentId, userId);
-
-  //   console.log({
-  //     workspaceId,
-  //   });
-
-  //   return await workspaceRepository.addDocumentToWorkspace(
-  //     workspaceId,
-  //     document
-  //   );
-  // }
 }
 
 export default new WorkspaceService();

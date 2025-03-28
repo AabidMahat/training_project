@@ -28,7 +28,7 @@ const authMiddleware = async (
 
   if (!token) {
     res.status(401).json({
-      message: "You are LoggedIn. Please Login to continue",
+      message: "You are not  LoggedIn. Please Login to continue",
     });
     return;
   }

@@ -18,37 +18,37 @@ class WorkSpaceRepository {
       .getMany();
   }
 
-  // async addDocumentToWorkspace(workspaceId: string, document: Document) {
-  //   console.log({
-  //     workspaceId,
-  //   });
+  async addDocumentToWorkspace(workspaceId: string, document: Document) {
+    console.log({
+      workspaceId,
+    });
 
-  //   const getWorkSpaceDocuments =
-  //     (await documentRepository.getWorkspaceDocuments(workspaceId)) || [];
+    const getWorkSpaceDocuments =
+      (await documentRepository.getWorkspaceDocuments(workspaceId)) || [];
 
-  //   console.log({ getWorkSpaceDocuments, document });
+    console.log({ getWorkSpaceDocuments, document });
 
-  //   const workspace = await getRepository(Workspace).findOne({
-  //     where: {
-  //       id: workspaceId,
-  //     },
-  //   });
+    const workspace = await getRepository(Workspace).findOne({
+      where: {
+        id: workspaceId,
+      },
+    });
 
-  //   document.workspace = workspace!;
+    document.workspace = workspace!;
 
-  //   await documentRepository.saveDocument(document);
+    await documentRepository.saveDocument(document);
 
-  //   //No need
+    //No need
 
-  //   return await getRepository(Workspace).update(
-  //     {
-  //       id: workspaceId,
-  //     },
-  //     {
-  //       document: [...getWorkSpaceDocuments, document],
-  //     }
-  //   );
-  // }
+    return await getRepository(Workspace).update(
+      {
+        id: workspaceId,
+      },
+      {
+        document: [...getWorkSpaceDocuments, document],
+      }
+    );
+  }
 
   async getWorkspaceById(workspaceId:string){
     return await getRepository(Workspace).findOne({

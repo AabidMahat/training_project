@@ -10,7 +10,7 @@ import { User } from "./user.model";
 import { MinLength } from "class-validator";
 import { Workspace } from "./workspace.model";
 
-@Entity("document_table_24")
+@Entity("document_table_26")
 export default class Document {
   @PrimaryGeneratedColumn()
   id: number;

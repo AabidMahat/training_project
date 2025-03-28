@@ -8,7 +8,7 @@ import {
 import { User } from "./user.model";
 import Document from "./document.model";
 
-@Entity("activity_table_23")
+@Entity("activity_table_26")
 export class Activity {
   @PrimaryGeneratedColumn()
   id: number;

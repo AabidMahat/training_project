@@ -13,9 +13,11 @@ class WorkSpaceuUerController {
     try {
       const user = (req as AuthRequest).user as User;
       const { workspaceId } = req.params;
+
       const workspaceUser = await workspaceUserService.addUserToWorkspace(
         workspaceId,
-        user
+        user,
+        { ...req.body }
       );
 
       if (!workspaceUser) {

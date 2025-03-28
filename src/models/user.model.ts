@@ -12,8 +12,9 @@ import {
 } from "typeorm";
 import Document from "./document.model";
 import { WorkSpaceUser } from "./workspaceUser.model";
+import { Request } from "./request.model";
 
-@Entity("user_table_23")
+@Entity("user_table_25")
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -29,21 +30,18 @@ export class User {
     unique: true,
     nullable: false,
   })
-  @IsEmail({}, { message: "Invalid email format" })
   email: string;
 
   @Column({
     type: "varchar",
     nullable: false,
   })
-  @MinLength(6, { message: "Password must be at least 6 characters long" })
   password: string;
 
   @Column({
     type: "varchar",
     default: "editor",
   })
-  @IsIn(["admin", "editor", "viewer"], { message: "Invalid Role" })
   role: string;
 
   confirmPassword?: string;
@@ -64,6 +62,9 @@ export class User {
 
   @OneToMany(() => WorkSpaceUser, (workspaceUser) => workspaceUser.workspace)
   workspaceUser: WorkSpaceUser[];
+
+  @OneToMany(() => Request, (request) => request.user)
+  requests: Request[];
 
   chnagePasswordAfter(JWTTimestamp: number) {
     if (this.passwordChangeAt)

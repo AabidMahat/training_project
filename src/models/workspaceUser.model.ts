@@ -2,7 +2,7 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./user.model";
 import { Workspace } from "./workspace.model";
 
-@Entity("worksspace_user_20")
+@Entity("worksspace_user_22")
 export class WorkSpaceUser {
   @PrimaryGeneratedColumn("uuid")
   id: string;
