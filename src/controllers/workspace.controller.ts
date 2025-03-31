@@ -58,6 +58,54 @@ class WorkspaceController {
     }
   }
 
+  async getAllWorkspace(req: Request, res: Response) {
+    try {
+      const workspaces = await workspaceService.getAllWorkspace();
+
+      if (workspaces.length === 0) {
+        res.status(203).json({
+          message: "No Workspace created",
+        });
+        return;
+      }
+
+      res.status(200).json({
+        message: "Workspace Found",
+        data: workspaces,
+      });
+    } catch (err) {
+      res.status(404).json({
+        message: "Something went wrong",
+        err: (err as Error).message,
+      });
+    }
+  }
+
+  async getWorkspaceById(req: Request, res: Response) {
+    try {
+      const data = await workspaceService.getUserandDocumentByWorkspaceId(
+        req.params.workspaceId
+      );
+
+      if (!data) {
+        res.status(404).json({
+          message: "No Workspace with this Id",
+        });
+        return;
+      }
+
+      res.status(200).json({
+        message: "Workspace details fetched",
+        data,
+      });
+    } catch (error) {
+      res.status(404).json({
+        message: "Something went wrong",
+        err: (error as Error).message,
+      });
+    }
+  }
+
   // async addDocumentToWorkSpace(req: Request, res: Response) {
   //   try {
   //     const user = (req as AuthRequest).user as User;

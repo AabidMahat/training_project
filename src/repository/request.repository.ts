@@ -6,6 +6,44 @@ class RequestRepository {
     const newRequest = getRepository(Request).create(request);
     return await getRepository(Request).save(newRequest);
   }
+
+  async approveRequest(userId: number, workspaceId: string) {
+    const request = await getRepository(Request).findOne({
+      where: {
+        user: {
+          id: userId,
+        },
+        workspace: {
+          id: workspaceId,
+        },
+      },
+    });
+
+    if (request?.status === "approved") {
+      throw new Error("Request is already Approved");
+    }
+
+    request!.status = "approved";
+
+    return await getRepository(Request).save(request!);
+  }
+
+  async rejectRequest(userId: number, workspaceId: string) {
+    const request = await getRepository(Request).findOne({
+      where: {
+        user: {
+          id: userId,
+        },
+        workspace: {
+          id: workspaceId,
+        },
+      },
+    });
+
+    request!.status = "rejected";
+
+    return await getRepository(Request).save(request!);
+  }
 }
 
 export default new RequestRepository();

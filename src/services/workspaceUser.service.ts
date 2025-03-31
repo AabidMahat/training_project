@@ -4,13 +4,14 @@ import workspaceRepository from "../repository/workspace.repository";
 import workspaceUserRepository from "../repository/workspaceUser.repository";
 import requestService from "./request.service";
 import { Request } from "../models/request.model";
+import authRepository from "../repository/auth.repository";
 
 class WorkspaceUserService {
   async getAllWorkspaceUser() {
     return await workspaceUserRepository.getAllWorkspaceUser();
   }
 
-  async addUserToWorkspace(
+  async sendRequestToWorkspace(
     workspaceId: string,
     user: User,
     requestData: Partial<Request>
@@ -27,10 +28,15 @@ class WorkspaceUserService {
       workspace,
     });
 
-    if (request.status !== "accepted") {
-      throw new Error("Please wait Admin will Response to your Request");
-    }
+    return request;
+  }
 
+  async addWorkspaceUser(workspaceId: string, userId: number) {
+    const workspace = await workspaceRepository.getWorkspaceById(workspaceId);
+    const user = (await authRepository.getUserById(userId)) as User;
+    if (!workspace) {
+      throw new Error("This workspace no longer exists");
+    }
     return await workspaceUserRepository.createWorkUser({
       role: user.role,
       user,

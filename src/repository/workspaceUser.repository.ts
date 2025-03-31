@@ -11,6 +11,17 @@ class WorkSpaceSUserRepository {
     return await getRepository(WorkSpaceUser).save(newWorkSpace);
   }
 
+  async getDataByWorkspaceId(workspaceId: string) {
+    return await getRepository(WorkSpaceUser).find({
+      where: {
+        workspace: {
+          id: workspaceId,
+        },
+      },
+      relations: ["user"],
+    });
+  }
+
   async getWorkSpaceUserById(userId: number, workspaceId: string) {
     return await getRepository(WorkSpaceUser).findOne({
       where: {

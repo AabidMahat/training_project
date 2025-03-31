@@ -24,6 +24,15 @@ class WorkspaceService {
     return await workspaceRepository.getUserWorkspace(userId);
   }
 
+  async getUserandDocumentByWorkspaceId(workspaceId: string) {
+    return await workspaceRepository.getUserandDocumentByWorkspaceId(
+      workspaceId
+    );
+  }
+
+  async getAllWorkspace() {
+    return await workspaceRepository.getAllWorkspace();
+  }
 }
 
 export default new WorkspaceService();

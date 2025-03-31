@@ -9,6 +9,7 @@ import { configureSocket } from "./socket/socket.handler";
 import { workSpaceRouting } from "./routers/workspace.routing";
 import { activityRouter } from "./routers/activity.routing";
 import { workspaceUserRouter } from "./routers/workspaceuser.routing";
+import { requestRouting } from "./routers/request.routing";
 
 const app = express();
 
@@ -40,5 +41,6 @@ app.use("/api/v1/document", documentRouting);
 app.use("/api/v1/workspace", workSpaceRouting);
 app.use("/api/v1/activity", activityRouter);
 app.use("/api/v1/workspaceUser", workspaceUserRouter);
+app.use("/api/v1/request", requestRouting);
 
 export default server;

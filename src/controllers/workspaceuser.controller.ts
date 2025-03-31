@@ -9,12 +9,12 @@ class WorkSpaceuUerController {
     } catch (error) {}
   }
 
-  async addUserToWorkspace(req: Request, res: Response) {
+  async sendRequestToWorkspace(req: Request, res: Response) {
     try {
       const user = (req as AuthRequest).user as User;
       const { workspaceId } = req.params;
 
-      const workspaceUser = await workspaceUserService.addUserToWorkspace(
+      const workspaceUser = await workspaceUserService.sendRequestToWorkspace(
         workspaceId,
         user,
         { ...req.body }
@@ -27,7 +27,7 @@ class WorkSpaceuUerController {
         return;
       }
       res.status(200).json({
-        message: "User added to workspace",
+        message: "Please wait Admin will Response to your Request",
       });
     } catch (error) {
       res.status(404).json({

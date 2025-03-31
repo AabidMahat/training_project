@@ -8,6 +8,11 @@ import { JWT_SECRET } from "../config/jwt.config";
 
 class UserService {
   async registerUser(user: Partial<User>) {
+    console.log({
+      password: user.password,
+      confirmPassword: user.confirmPassword,
+    });
+
     if (user.password !== user.confirmPassword) {
       throw new Error("Password do not match");
     }
