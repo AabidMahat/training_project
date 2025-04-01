@@ -14,8 +14,8 @@ router
   .post(uploads.single("file"), documentController.createDocument);
 
 router
-  .route("/addDocument/:workspaceId/:documentId")
-  .patch(documentController.addDocumentToWorkSpace);
+  .route("/addDocument/:workspaceId")
+  .patch(uploads.single("file"), documentController.addDocumentToWorkSpace);
 
 router.route("/:documentId").delete(documentController.deleteDocument);
 

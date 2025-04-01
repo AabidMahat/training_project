@@ -61,11 +61,25 @@ class DocumentController {
 
   async addDocumentToWorkSpace(req: Request, res: Response) {
     try {
-      const { workspaceId, documentId } = req.params;
+      const { workspaceId } = req.params;
+
+      const loggedInUser = (req as AuthRequest).user;
+
+      console.log(req.file);
+      let filePath = "";
+      if (req.file) {
+        filePath = req.file.path; // Get the file path
+      }
+
+      const newDocument = await documentService.createDocument({
+        ...req.body,
+        documentUrl: filePath,
+        user: loggedInUser,
+      });
 
       const document = await documentService.addDocumentToWorkspace(
         workspaceId,
-        +documentId
+        newDocument.id
       );
 
       if (!document) {

@@ -10,12 +10,12 @@ const AppDataSource = async () => {
   try {
     const connection = await createConnection({
       type: "mssql",
-      host: "Anis\\SQLEXPRESS",
-      port: 1433,
-      database: "Training",
+      host: "dev.c5owyuw64shd.ap-south-1.rds.amazonaws.com",
+      port: 1982,
+      database: "JIBE_Main_Training",
       entities: [User, Document, Activity, Workspace, WorkSpaceUser, Request],
-      username: "sa",
-      password: "root",
+      username: "j2",
+      password: "123456",
       synchronize: true,
       options: {
         encrypt: false,
