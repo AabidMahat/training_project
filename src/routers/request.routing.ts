@@ -10,4 +10,8 @@ router
   .route("/approve/:workspaceId/:userId")
   .post(roleBasedAuth("admin"), requestController.approveRequest);
 
+router
+  .route("/showRequest")
+  .get(roleBasedAuth("admin"), requestController.showAllRequest);
+
 export { router as requestRouting };

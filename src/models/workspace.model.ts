@@ -2,6 +2,7 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import Document from "./document.model";
 import { WorkSpaceUser } from "./workspaceUser.model";
 import { Request } from "./request.model";
+import { Activity } from "./activity.model";
 
 @Entity("workspace_table_21")
 export class Workspace {
@@ -21,4 +22,7 @@ export class Workspace {
 
   @OneToMany(() => WorkSpaceUser, (workspaceUser) => workspaceUser.workspace)
   workspaceUser: WorkSpaceUser[];
+
+  @OneToMany(() => Activity, (activity) => activity.workspace)
+  activity: Activity[];
 }

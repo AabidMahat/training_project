@@ -16,7 +16,6 @@ class ActivityController {
       res.status(200).json({
         message: "Activity fetched",
         length: activities.length,
-
         data: activities,
       });
     } catch (error) {

@@ -62,7 +62,7 @@ export const configureSocket = (io: Server) => {
 
           socket.to(documentId).emit("updateDocument", content);
 
-          await activityService.logActivity(
+          await activityService.logDocumentActivity(
             "edit Document",
             +userId,
             +documentId
