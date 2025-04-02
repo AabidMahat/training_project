@@ -22,7 +22,6 @@ export const configureSocket = (io: Server) => {
         // console.log("Received userId:", userId);
 
         console.log(`User ${userId} joined document ${documentId}`);
-        
 
         //   ! Add user to the activatedUser Set
 
