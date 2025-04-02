@@ -44,6 +44,12 @@ class RequestRepository {
 
     return await getRepository(Request).save(request!);
   }
+
+  async showAllRequests() {
+    return await getRepository(Request).find({
+      relations: ["user", "workspace"],
+    });
+  }
 }
 
 export default new RequestRepository();

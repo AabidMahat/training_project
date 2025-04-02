@@ -6,7 +6,7 @@ import { User } from "../models/user.model";
 class DocumentController {
   async createDocument(req: Request, res: Response) {
     try {
-      const loggedInUser = (req as AuthRequest).user;
+      const loggedInUser = (req as AuthRequest).user as User;
 
       console.log(req.file);
       let filePath = "";
@@ -14,11 +14,14 @@ class DocumentController {
         filePath = req.file.path; // Get the file path
       }
 
-      const document = await documentService.createDocument({
-        ...req.body,
-        documentUrl: filePath,
-        user: loggedInUser,
-      });
+      const document = await documentService.createDocument(
+        {
+          ...req.body,
+          documentUrl: filePath,
+          user: loggedInUser,
+        },
+        loggedInUser.id
+      );
 
       if (!document) {
         res.status(404).json({
@@ -63,7 +66,7 @@ class DocumentController {
     try {
       const { workspaceId } = req.params;
 
-      const loggedInUser = (req as AuthRequest).user;
+      const loggedInUser = (req as AuthRequest).user as User;
 
       console.log(req.file);
       let filePath = "";
@@ -71,11 +74,14 @@ class DocumentController {
         filePath = req.file.path; // Get the file path
       }
 
-      const newDocument = await documentService.createDocument({
-        ...req.body,
-        documentUrl: filePath,
-        user: loggedInUser,
-      });
+      const newDocument = await documentService.createDocument(
+        {
+          ...req.body,
+          documentUrl: filePath,
+          user: loggedInUser,
+        },
+        loggedInUser.id
+      );
 
       const document = await documentService.addDocumentToWorkspace(
         workspaceId,

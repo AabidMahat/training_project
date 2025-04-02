@@ -3,9 +3,15 @@ import Document from "../models/document.model";
 import documentRepository from "../repository/document.repository";
 import workspaceRepository from "../repository/workspace.repository";
 import workspaceUserRepository from "../repository/workspaceUser.repository";
+import activityService from "./activity.service";
 
 class DocumentService {
-  async createDocument(document: Partial<Document>) {
+  async createDocument(document: Partial<Document>, userId: number) {
+    await activityService.logDocumentActivity(
+      "Create Document",
+      userId,
+      document.id!
+    );
     return await documentRepository.createDocument(document);
   }
 

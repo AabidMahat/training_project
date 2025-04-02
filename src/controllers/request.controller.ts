@@ -1,7 +1,5 @@
 import { Response, Request } from "express";
 import requestService from "../services/request.service";
-import { AuthRequest } from "../utils/authRequest.utils";
-import { User } from "../models/user.model";
 
 class RequestController {
   async approveRequest(req: Request, res: Response) {
@@ -19,6 +17,29 @@ class RequestController {
       res.status(202).json({
         message: "Admin Approved your Request",
         data: request,
+      });
+    } catch (error) {
+      res.status(404).json({
+        message: "Something went wrong",
+        err: (error as Error).message,
+      });
+    }
+  }
+
+  async showAllRequest(req: Request, res: Response) {
+    try {
+      const requests = await requestService.showAllRequests();
+
+      if (requests.length === 0) {
+        res.status(404).json({
+          message: "No Request Found",
+        });
+        return;
+      }
+
+      res.status(200).json({
+        message: "Request Fetched",
+        data: requests,
       });
     } catch (error) {
       res.status(404).json({

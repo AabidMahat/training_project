@@ -22,7 +22,6 @@ export const configureSocket = (io: Server) => {
         // console.log("Received userId:", userId);
 
         console.log(`User ${userId} joined document ${documentId}`);
-        
 
         //   ! Add user to the activatedUser Set
 
@@ -63,7 +62,7 @@ export const configureSocket = (io: Server) => {
 
           socket.to(documentId).emit("updateDocument", content);
 
-          await activityService.logActivity(
+          await activityService.logDocumentActivity(
             "edit Document",
             +userId,
             +documentId

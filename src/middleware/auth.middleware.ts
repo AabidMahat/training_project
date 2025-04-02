@@ -61,19 +61,23 @@ const authMiddleware = async (
 };
 
 const roleBasedAuth = (...requiredRoles: string[]) => {
-  return (req: Request, res: Response, next: NextFunction) => {
-    const user = (req as AuthRequest).user as User;
+  try {
+    return (req: Request, res: Response, next: NextFunction) => {
+      const user = (req as AuthRequest).user as User;
 
-    if (!requiredRoles.includes(user.role)) {
-      res.status(403).json({
-        message:
-          "Acess denied.. You dont have permission to perform this action",
-      });
-      return;
-    }
+      if (!requiredRoles.includes(user.role)) {
+        res.status(403).json({
+          message:
+            "Acess denied.. You dont have permission to perform this action",
+        });
+        return;
+      }
 
-    next();
-  };
+      next();
+    };
+  } catch (err) {
+    throw new Error((err as JsonWebTokenError).message);
+  }
 };
 
 export { authMiddleware, roleBasedAuth };

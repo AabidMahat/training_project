@@ -8,21 +8,9 @@ class ActivityRepository {
   }
 
   async getAllActivity() {
-    return await getRepository(Activity)
-      .createQueryBuilder("activity")
-      .leftJoinAndSelect("activity.user", "user")
-      .leftJoinAndSelect("activity.document", "document")
-      .select([
-        "activity.id",
-        "activity.action",
-        "activity.timestamp",
-        "user.id",
-        "user.name",
-        "user.email",
-        "document.id",
-        "document.title",
-      ])
-      .getMany();
+    return await getRepository(Activity).find({
+      relations: ["user", "document", "workspace"],
+    });
   }
 }
 export default new ActivityRepository();

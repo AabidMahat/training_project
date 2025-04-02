@@ -24,6 +24,10 @@ class RequestService {
   async rejectRequest(userId: number, workspaceId: string) {
     return await requestRepository.rejectRequest(userId, workspaceId);
   }
+
+  async showAllRequests() {
+    return await requestRepository.showAllRequests();
+  }
 }
 
 export default new RequestService();

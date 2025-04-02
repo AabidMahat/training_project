@@ -7,6 +7,7 @@ import {
 } from "typeorm";
 import { User } from "./user.model";
 import Document from "./document.model";
+import { Workspace } from "./workspace.model";
 
 @Entity("activity_table_26")
 export class Activity {
@@ -29,4 +30,7 @@ export class Activity {
     onDelete: "CASCADE",
   })
   document: Document;
+
+  @ManyToOne(() => Workspace, (workspace) => workspace.activity)
+  workspace: Workspace;
 }
