@@ -85,6 +85,16 @@ class WorkSpaceRepository {
       id: workspaceId,
     });
   }
+
+  async getOwnerWorkspace(ownerId: number) {
+    return await getRepository(Workspace).find({
+      where: {
+        owner: {
+          id: ownerId,
+        },
+      },
+    });
+  }
 }
 
 export default new WorkSpaceRepository();

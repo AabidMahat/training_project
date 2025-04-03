@@ -1,7 +1,6 @@
 import express from "express";
 import workspaceController from "../controllers/workspace.controller";
 import { authMiddleware } from "../middleware/auth.middleware";
-import uploads from "../utils/multer.utils";
 
 const router = express.Router();
 
@@ -22,5 +21,7 @@ router
 router
   .route("/remove/:workspaceId")
   .delete(workspaceController.deleteWorkspace);
+
+router.route("/ownerWorkspace").get(workspaceController.getOwnerWorkspace);
 
 export { router as workSpaceRouting };

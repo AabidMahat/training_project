@@ -126,6 +126,29 @@ class WorkspaceController {
       throw new AppError((error as Error).message, 500);
     }
   }
+  async getOwnerWorkspace(req: Request, res: Response) {
+    try {
+      const user = (req as AuthRequest).user as User;
+      const ownerWorkspaces = await workspaceService.getOwnerWorkspace(user.id);
+
+      if (!ownerWorkspaces) {
+        res.status(500).json({
+          message: "No Workspace found",
+        });
+        return;
+      }
+
+      res.status(200).json({
+        message: "Workspace Found",
+        data: ownerWorkspaces,
+      });
+    } catch (error) {
+      res.status(404).json({
+        message: "Something went wrong",
+        err: (error as Error).message,
+      });
+    }
+  }
 }
 
 export default new WorkspaceController();

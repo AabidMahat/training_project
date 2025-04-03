@@ -7,12 +7,14 @@ import {
   CreateDateColumn,
   Entity,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 import Document from "./document.model";
 import { WorkSpaceUser } from "./workspaceUser.model";
 import { Request } from "./request.model";
+import { Workspace } from "./workspace.model";
 
 @Entity("user_table_25")
 export class User {
@@ -70,6 +72,9 @@ export class User {
 
   @OneToMany(() => Request, (request) => request.user)
   requests: Request[];
+
+  @OneToMany(() => Workspace, (workspace) => workspace.owner)
+  ownerWorkspace: Workspace[];
 
   chnagePasswordAfter(JWTTimestamp: number) {
     if (this.passwordChangeAt)

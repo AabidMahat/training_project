@@ -1,4 +1,4 @@
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import http from "http";
 import cors from "cors";
 
@@ -36,6 +36,11 @@ const io = new Server(server, {
 });
 
 configureSocket(io);
+
+app.use((req: Request, res: Response, next: NextFunction) => {
+  console.log(`📌 Incoming request: ${req.method} ${req.originalUrl}`);
+  next();
+});
 
 app.use("/api/v1/auth", authRouting);
 app.use("/api/v1/document", documentRouting);

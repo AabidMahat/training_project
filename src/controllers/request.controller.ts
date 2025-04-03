@@ -26,6 +26,16 @@ class RequestController {
     }
   }
 
+  async removeUserFromWorkspaceRequest(req: Request, res: Response) {
+    try {
+    } catch (error) {
+      res.status(404).json({
+        message: "Something went wrong",
+        err: (error as Error).message,
+      });
+    }
+  }
+
   async showAllRequest(req: Request, res: Response) {
     try {
       const requests = await requestService.showAllRequests();

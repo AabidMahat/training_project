@@ -7,7 +7,10 @@ import activityService from "./activity.service";
 class WorkspaceService {
   async createWorkspace(workspaceData: Partial<Workspace>, user: User) {
     console.log({ workspaceData, user });
-    const workspace = await workspaceRepository.createWorkspace(workspaceData);
+    const workspace = await workspaceRepository.createWorkspace({
+      ...workspaceData,
+      owner: user,
+    });
 
     await activityService.logWorkspaceActivity(
       "create-workspace",
@@ -46,6 +49,10 @@ class WorkspaceService {
     );
 
     return await workspaceRepository.deleteWorkspace(workspaceId);
+  }
+
+  async getOwnerWorkspace(ownerId: number) {
+    return await workspaceRepository.getOwnerWorkspace(ownerId);
   }
 }
 
