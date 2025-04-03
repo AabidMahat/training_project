@@ -11,7 +11,7 @@ const storage = diskStorage({
   },
 });
 
-const allowedExtension = [".pdf", ".doc"];
+const allowedExtension = [".pdf", ".docx"];
 
 const fileFilter = (
   req: Request,

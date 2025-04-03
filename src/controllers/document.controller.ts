@@ -67,9 +67,10 @@ class DocumentController {
     try {
       const { workspaceId } = req.params;
 
-      const loggedInUser = (req as AuthRequest).user as User;
+      const loggedInUser = (req as AuthRequest).user;
 
       console.log(req.file);
+
       let filePath = "";
       if (req.file) {
         filePath = req.file.path; // Get the file path
