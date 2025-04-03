@@ -81,7 +81,7 @@ class DocumentController {
           documentUrl: filePath,
           user: loggedInUser,
         },
-        loggedInUser.id
+        loggedInUser!.id
       );
 
       const document = await documentService.addDocumentToWorkspace(
