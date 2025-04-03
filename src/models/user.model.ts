@@ -30,17 +30,22 @@ export class User {
     unique: true,
     nullable: false,
   })
+  @IsEmail()
   email: string;
 
   @Column({
     type: "varchar",
     nullable: false,
   })
+  @MinLength(5, { message: "Passwod should be 5 length long" })
   password: string;
 
   @Column({
     type: "varchar",
     default: "editor",
+  })
+  @IsIn(["viewer", "editor", "admin"], {
+    message: "Please Provide the valid role",
   })
   role: string;
 

@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import workspaceService from "../services/workspace.service";
 import { AuthRequest } from "../utils/authRequest.utils";
 import { User } from "../models/user.model";
+import AppError from "../utils/appError.utils";
 
 class WorkspaceController {
   async createWorkspace(req: Request, res: Response) {
@@ -106,34 +107,25 @@ class WorkspaceController {
     }
   }
 
-  // async addDocumentToWorkSpace(req: Request, res: Response) {
-  //   try {
-  //     const user = (req as AuthRequest).user as User;
-  //     const { workspaceId, documentId } = req.params;
+  async deleteWorkspace(req: Request, res: Response) {
+    try {
+      const user = (req as AuthRequest).user as User;
+      const workspace = await workspaceService.removeWorkspace(
+        req.params.workspaceId,
+        user.id
+      );
 
-  //     const workspace = await workspaceService.addDocumentToWorkspace(
-  //       workspaceId,
-  //       +documentId,
-  //       user.id
-  //     );
+      if (!workspace.affected) {
+        throw new AppError("Cannot perform this action", 503);
+      }
 
-  //     if (!workspace.affected) {
-  //       res.status(404).json({
-  //         message: "Document is not added",
-  //       });
-  //       return;
-  //     }
-
-  //     res.status(200).json({
-  //       message: "Document Added",
-  //     });
-  //   } catch (error) {
-  //     res.status(404).json({
-  //       message: "Something went wrong",
-  //       err: (error as Error).message,
-  //     });
-  //   }
-  // }
+      res.status(203).json({
+        message: "Workspace Removed",
+      });
+    } catch (error) {
+      throw new AppError((error as Error).message, 500);
+    }
+  }
 }
 
 export default new WorkspaceController();

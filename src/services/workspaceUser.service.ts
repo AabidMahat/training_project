@@ -5,6 +5,7 @@ import workspaceUserRepository from "../repository/workspaceUser.repository";
 import requestService from "./request.service";
 import { Request } from "../models/request.model";
 import authRepository from "../repository/auth.repository";
+import activityService from "./activity.service";
 
 class WorkspaceUserService {
   async getAllWorkspaceUser() {
@@ -31,24 +32,45 @@ class WorkspaceUserService {
     return request;
   }
 
-  async addWorkspaceUser(workspaceId: string, userId: number) {
+  async addWorkspaceUser(
+    workspaceId: string,
+    userId: number,
+    requestedRole: string
+  ) {
     const workspace = await workspaceRepository.getWorkspaceById(workspaceId);
     const user = (await authRepository.getUserById(userId)) as User;
     if (!workspace) {
       throw new Error("This workspace no longer exists");
     }
+
+    await activityService.logWorkspaceActivity(
+      "add-workspace-user",
+      userId,
+      workspaceId
+    );
+
     return await workspaceUserRepository.createWorkUser({
-      role: user.role,
+      role: requestedRole,
       user,
       workspace,
     });
   }
 
   async removeUserFromWorkspace(workspaceId: string, userId: number) {
+    await activityService.logWorkspaceActivity(
+      "remove-workspace-user",
+      userId,
+      workspaceId
+    );
+
     return await workspaceUserRepository.removeUserFromWorkspace(
       userId,
       workspaceId
     );
+  }
+
+  async getUserByWorkspace(workspaceId: string) {
+    return await workspaceUserRepository.getUserByWorkspaceId(workspaceId);
   }
 }
 

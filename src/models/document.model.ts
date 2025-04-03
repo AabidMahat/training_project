@@ -44,6 +44,8 @@ export default class Document {
   @ManyToOne(() => User, (user) => user.documents)
   user: User;
 
-  @ManyToOne(() => Workspace, (workspace) => workspace.document)
+  @ManyToOne(() => Workspace, (workspace) => workspace.document, {
+    onDelete: "CASCADE",
+  })
   workspace: Workspace;
 }

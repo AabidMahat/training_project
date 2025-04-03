@@ -14,4 +14,8 @@ router
   .route("/removeUser/:workspaceId/:userId")
   .delete(workspaceUser.removeUserFromWorkspace);
 
+router
+  .route("/getUserByWorkspaceId/:workspaceId")
+  .get(workspaceUser.getUserByWorkspace);
+
 export { router as workspaceUserRouter };
