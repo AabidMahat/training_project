@@ -35,15 +35,35 @@ class WorkSpaceSUserRepository {
     });
   }
 
-  async removeUserFromWorkspace(userId: number, workspaceId: string) {
-    return await getRepository(WorkSpaceUser).delete({
-      workspace: {
-        id: workspaceId,
+  async getUserByWorkspaceId(workspaceId: string) {
+    return await getRepository(WorkSpaceUser).find({
+      where: {
+        workspace: {
+          id: workspaceId,
+        },
       },
-      user: {
-        id: userId,
+      relations: ["user"],
+    });
+  }
+
+  async removeUserFromWorkspace(userId: number, workspaceId: string) {
+    const workspaceUserRepository = getRepository(WorkSpaceUser);
+
+
+    
+
+    const workspaceUser = await workspaceUserRepository.findOne({
+      where: {
+        workspace: { id: workspaceId },
+        user: { id: userId },
       },
     });
+
+    if (workspaceUser) {
+      return await workspaceUserRepository.remove(workspaceUser);
+    } else {
+      throw new Error("User not found in workspace.");
+    }
   }
 }
 export default new WorkSpaceSUserRepository();

@@ -19,4 +19,6 @@ router
 
 router.route("/:documentId").delete(documentController.deleteDocument);
 
+router.route("/update/:documentId").patch(documentController.updateDocument);
+
 export { router as documentRouting };

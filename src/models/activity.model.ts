@@ -26,11 +26,11 @@ export class Activity {
   @ManyToOne(() => User, (user) => user.id)
   user: User;
 
-  @ManyToOne(() => Document, (document) => document.id, {
-    onDelete: "CASCADE",
-  })
+  @ManyToOne(() => Document, (document) => document.id)
   document: Document;
 
-  @ManyToOne(() => Workspace, (workspace) => workspace.activity)
+  @ManyToOne(() => Workspace, (workspace) => workspace.activity, {
+    onDelete: "CASCADE",
+  })
   workspace: Workspace;
 }

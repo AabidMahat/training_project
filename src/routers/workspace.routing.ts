@@ -19,4 +19,8 @@ router
   .route("/getWorkspace/:workspaceId")
   .get(workspaceController.getWorkspaceById);
 
+router
+  .route("/remove/:workspaceId")
+  .delete(workspaceController.deleteWorkspace);
+
 export { router as workSpaceRouting };

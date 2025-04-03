@@ -65,6 +65,18 @@ class DocumentService {
   async deleteDocument(documentId: number) {
     return await documentRepository.deleteDocument(documentId);
   }
+
+
+  async updateDocument(documentId:number,content:string,userId:number){
+
+    await activityService.logDocumentActivity(
+      "update-document",
+      userId,
+      documentId
+    );
+
+    return await documentRepository.updateDocument(documentId,content)
+  }
 }
 
 export default new DocumentService();

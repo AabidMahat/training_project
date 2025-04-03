@@ -36,6 +36,8 @@ export class Request {
   @ManyToOne(() => User, (user) => user.requests)
   user: User;
 
-  @ManyToOne(() => Workspace, (workspace) => workspace.requests)
+  @ManyToOne(() => Workspace, (workspace) => workspace.requests,{
+    onDelete: "CASCADE",
+  })
   workspace: Workspace;
 }

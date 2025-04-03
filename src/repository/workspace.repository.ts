@@ -80,6 +80,11 @@ class WorkSpaceRepository {
       relations: ["document", "workspaceUser"],
     });
   }
+  async deleteWorkspace(workspaceId: string) {
+    return await getRepository(Workspace).delete({
+      id: workspaceId,
+    });
+  }
 }
 
 export default new WorkSpaceRepository();

@@ -37,6 +37,16 @@ class WorkspaceService {
   async getAllWorkspace() {
     return await workspaceRepository.getAllWorkspace();
   }
+
+  async removeWorkspace(workspaceId: string, userId: number) {
+    await activityService.logWorkspaceActivity(
+      "create-workspace",
+      userId,
+      workspaceId
+    );
+
+    return await workspaceRepository.deleteWorkspace(workspaceId);
+  }
 }
 
 export default new WorkspaceService();

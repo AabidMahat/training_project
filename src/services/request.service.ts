@@ -12,7 +12,8 @@ class RequestService {
 
     const workspaceUser = await workspaceUserService.addWorkspaceUser(
       workspaceId,
-      userId
+      userId,
+      request.requested_role
     );
 
     console.log({

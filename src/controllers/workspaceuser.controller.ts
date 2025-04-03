@@ -45,7 +45,7 @@ class WorkSpaceuUerController {
         +userId
       );
 
-      if (!workspaceUser.affected) {
+      if (!workspaceUser) {
         res.status(402).json({
           message: "Error while removing user",
         });
@@ -54,6 +54,31 @@ class WorkSpaceuUerController {
 
       res.status(202).json({
         message: "User removed Successfully",
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: "Something went wrong",
+        err: (error as Error).stack,
+      });
+    }
+  }
+
+  async getUserByWorkspace(req: Request, res: Response) {
+    try {
+      const workspaceUsers = await workspaceUserService.getUserByWorkspace(
+        req.params.workspaceId
+      );
+
+      if (workspaceUsers.length === 0) {
+        res.status(503).json({
+          message: "No user found",
+        });
+        return;
+      }
+
+      res.status(200).json({
+        message: "Active users",
+        data: workspaceUsers,
       });
     } catch (error) {
       res.status(404).json({

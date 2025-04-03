@@ -35,6 +35,15 @@ class DocumentRepository {
       id: documentId,
     });
   }
+
+  async updateDocument(documentId: number, content: string) {
+    return await getRepository(Document).update(
+      { id: documentId },
+      {
+        content,
+      }
+    );
+  }
 }
 
 export default new DocumentRepository();

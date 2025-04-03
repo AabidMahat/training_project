@@ -1,7 +1,8 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import documentService from "../services/document.service";
 import { AuthRequest } from "../utils/authRequest.utils";
 import { User } from "../models/user.model";
+import AppError from "../utils/appError.utils";
 
 class DocumentController {
   async createDocument(req: Request, res: Response) {
@@ -42,7 +43,7 @@ class DocumentController {
     }
   }
 
-  async getDocumentById(req: Request, res: Response) {
+  async getDocumentById(req: Request, res: Response, next: NextFunction) {
     try {
       const user = (req as AuthRequest).user as User;
       const document = await documentService.getDocumentById(
@@ -55,7 +56,7 @@ class DocumentController {
         data: document,
       });
     } catch (error) {
-      res.status(404).json({
+      res.status(500).json({
         message: "Something went wrong",
         err: (error as Error).message,
       });
@@ -90,20 +91,22 @@ class DocumentController {
       );
 
       if (!document) {
-        res.status(404).json({
-          message: "Document is not added",
-        });
-        return;
+        throw new AppError("Document Not Added", 503);
+        // res.status(404).json({
+        //   message: "Document is not added",
+        // });
+        // return;
       }
 
       res.status(200).json({
         message: "Document Added",
       });
     } catch (error) {
-      res.status(404).json({
-        message: "Something went wrong",
-        err: (error as Error).message,
-      });
+      throw new AppError("Something went wrong", 500);
+      // res.status(404).json({
+      //   message: "Something went wrong",
+      //   err: (error as Error).message,
+      // });
     }
   }
 
@@ -126,6 +129,34 @@ class DocumentController {
     } catch (error) {
       res.status(404).json({
         message: "Something went wrong",
+        err: (error as Error).message,
+      });
+    }
+  }
+
+  async updateDocument(req: Request, res: Response) {
+    try {
+      const user = (req as AuthRequest).user as User;
+
+      const document = await documentService.updateDocument(
+        +req.params.documentId,
+        req.body.content,
+        user.id
+      );
+
+      if (!document.affected) {
+        res.status(404).json({
+          message: "Data is not updated",
+        });
+        return;
+      }
+
+      res.status(202).json({
+        message: "Document Updated",
+      });
+    } catch (error) {
+      res.status(404).json({
+        message: "Someting went wrong",
         err: (error as Error).message,
       });
     }
