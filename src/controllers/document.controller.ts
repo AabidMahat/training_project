@@ -91,22 +91,22 @@ class DocumentController {
       );
 
       if (!document) {
-        throw new AppError("Document Not Added", 503);
-        // res.status(404).json({
-        //   message: "Document is not added",
-        // });
-        // return;
+        // throw new AppError("Document Not Added", 503);
+        res.status(404).json({
+          message: "Document is not added",
+        });
+        return;
       }
 
       res.status(200).json({
         message: "Document Added",
       });
     } catch (error) {
-      throw new AppError("Something went wrong", 500);
-      // res.status(404).json({
-      //   message: "Something went wrong",
-      //   err: (error as Error).message,
-      // });
+      // throw new AppError("Something went wrong", 500);
+      res.status(404).json({
+        message: "Something went wrong",
+        err: (error as Error).message,
+      });
     }
   }
 
@@ -157,6 +157,27 @@ class DocumentController {
     } catch (error) {
       res.status(404).json({
         message: "Someting went wrong",
+        err: (error as Error).message,
+      });
+    }
+  }
+
+  async getOwnerDocuments(req: Request, res: Response) {
+    try {
+      // const user = (req as AuthRequest).user as User;
+      const ownerDocuments = await documentService.getOwnerDocuments(+req.params.userId);
+
+      if (ownerDocuments.length === 0) {
+        throw new AppError("No Document is created", 503);
+      }
+
+      res.status(200).json({
+        messgae: "Document Fetched",
+        data: ownerDocuments,
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: "Something went wrong",
         err: (error as Error).message,
       });
     }

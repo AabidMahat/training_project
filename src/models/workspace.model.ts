@@ -12,7 +12,7 @@ import { Request } from "./request.model";
 import { Activity } from "./activity.model";
 import { User } from "./user.model";
 
-@Entity("workspace_table_21")
+@Entity("workspace_table_22")
 export class Workspace {
   @PrimaryGeneratedColumn("uuid")
   id: string;

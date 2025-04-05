@@ -16,7 +16,7 @@ import { WorkSpaceUser } from "./workspaceUser.model";
 import { Request } from "./request.model";
 import { Workspace } from "./workspace.model";
 
-@Entity("user_table_25")
+@Entity("user_table_26")
 export class User {
   @PrimaryGeneratedColumn()
   id: number;

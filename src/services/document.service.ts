@@ -6,12 +6,18 @@ import workspaceUserRepository from "../repository/workspaceUser.repository";
 import activityService from "./activity.service";
 
 class DocumentService {
-  async createDocument(document: Partial<Document>, userId: number) {
+  async createDocument(document: Document, userId: number) {
+    const documentData = (await getRepository(Document).findOne({
+      where: {
+        id: document.id,
+      },
+    })) as Document;
     await activityService.logDocumentActivity(
-      "Create Document",
+      "create-document",
       userId,
-      document.id!
+      documentData
     );
+
     return await documentRepository.createDocument(document);
   }
 
@@ -66,16 +72,24 @@ class DocumentService {
     return await documentRepository.deleteDocument(documentId);
   }
 
-
-  async updateDocument(documentId:number,content:string,userId:number){
+  async updateDocument(documentId: number, content: string, userId: number) {
+    const document = (await getRepository(Document).findOne({
+      where: {
+        id: documentId,
+      },
+    })) as Document;
 
     await activityService.logDocumentActivity(
       "update-document",
       userId,
-      documentId
+      document
     );
 
-    return await documentRepository.updateDocument(documentId,content)
+    return await documentRepository.updateDocument(documentId, content);
+  }
+
+  async getOwnerDocuments(userId: number) {
+    return await documentRepository.getOwnerDocuments(userId);
   }
 }
 

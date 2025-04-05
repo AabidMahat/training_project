@@ -44,6 +44,16 @@ class DocumentRepository {
       }
     );
   }
+
+  async getOwnerDocuments(userId: number) {
+    return await getRepository(Document).find({
+      where: {
+        user: {
+          id: userId,
+        },
+      },
+    });
+  }
 }
 
 export default new DocumentRepository();

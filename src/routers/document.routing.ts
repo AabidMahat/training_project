@@ -15,10 +15,12 @@ router
 
 router
   .route("/addDocument/:workspaceId")
-  .patch(uploads.single("file"), documentController.addDocumentToWorkSpace);
+  .post(uploads.single("file"), documentController.addDocumentToWorkSpace);
 
 router.route("/:documentId").delete(documentController.deleteDocument);
 
 router.route("/update/:documentId").patch(documentController.updateDocument);
+
+router.route("/getOwnerDocument/:userId").get(documentController.getOwnerDocuments);
 
 export { router as documentRouting };

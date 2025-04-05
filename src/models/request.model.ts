@@ -8,7 +8,7 @@ import {
 import { User } from "./user.model";
 import { Workspace } from "./workspace.model";
 
-@Entity("request_table_15")
+@Entity("request_table_16")
 export class Request {
   @PrimaryGeneratedColumn("uuid")
   id: number;

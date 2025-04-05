@@ -126,7 +126,7 @@ class WorkspaceController {
       throw new AppError((error as Error).message, 500);
     }
   }
-  async getOwnerWorkspace(req: Request, res: Response) {
+  async getOwnerWorkspaceData(req: Request, res: Response) {
     try {
       const user = (req as AuthRequest).user as User;
       const ownerWorkspaces = await workspaceService.getOwnerWorkspace(user.id);

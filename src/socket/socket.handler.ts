@@ -13,28 +13,28 @@ export const configureSocket = (io: Server) => {
     //   ! User joins the document
 
     socket.on(
-      "joinDocument",
-      async (data: { documentId: string; userId: string }) => {
-        const { documentId, userId } = data;
-        socket.join(documentId);
+      "joinWorkspace",
+      async (data: { workspaceId: string; userId: string }) => {
+        const { workspaceId, userId } = data;
+        socket.join(workspaceId);
 
-        // console.log("Received documentId:", documentId);
+        // console.log("Received workspaceId:", workspaceId);
         // console.log("Received userId:", userId);
 
-        console.log(`User ${userId} joined document ${documentId}`);
+        console.log(`User ${userId} joined document ${workspaceId}`);
 
         //   ! Add user to the activatedUser Set
 
-        if (!activatedUser[documentId]) {
-          activatedUser[documentId] = new Set();
+        if (!activatedUser[workspaceId]) {
+          activatedUser[workspaceId] = new Set();
         }
-        activatedUser[documentId].add(userId);
+        activatedUser[workspaceId].add(userId);
 
         //   ? Send list to all active user
 
-        io.to(documentId).emit(
+        io.to(workspaceId).emit(
           "updateUserList",
-          Array.from(activatedUser[documentId])
+          Array.from(activatedUser[workspaceId])
         );
       }
     );
@@ -65,7 +65,7 @@ export const configureSocket = (io: Server) => {
           await activityService.logDocumentActivity(
             "edit Document",
             +userId,
-            +documentId
+            document
           );
         }
       }

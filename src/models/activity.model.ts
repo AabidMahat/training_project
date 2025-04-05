@@ -9,7 +9,7 @@ import { User } from "./user.model";
 import Document from "./document.model";
 import { Workspace } from "./workspace.model";
 
-@Entity("activity_table_26")
+@Entity("activity_table_27")
 export class Activity {
   @PrimaryGeneratedColumn()
   id: number;

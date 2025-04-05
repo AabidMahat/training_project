@@ -22,6 +22,6 @@ router
   .route("/remove/:workspaceId")
   .delete(workspaceController.deleteWorkspace);
 
-router.route("/ownerWorkspace").get(workspaceController.getOwnerWorkspace);
+router.route("/ownerWorkspace").post(workspaceController.getOwnerWorkspaceData);
 
 export { router as workSpaceRouting };
