@@ -39,6 +39,36 @@ export const configureSocket = (io: Server) => {
       }
     );
 
+    socket.on("typingUpdate", async ({ documentId, content, userId }) => {
+      // Do NOT save to DB
+      console.log(`📝 User ${userId} is typing in document ${documentId}`);
+
+      // Broadcast content to others in real time
+      socket.to(documentId).emit("liveTyping", content);
+    });
+
+    socket.on("saveDocument", async ({ documentId, content, userId }) => {
+      console.log(`💾 User ${userId} is saving document ${documentId}`);
+      const document = await documentService.getDocumentById(
+        +documentId,
+        +userId
+      );
+      if (document) {
+        document.content = content;
+        await documentService.saveDocument(document);
+        await activityService.logDocumentActivity(
+          "save Document",
+          +userId,
+          document
+        );
+      }
+    });
+
+    socket.on("joinDocument", async ({ documentId, userId }) => {
+      socket.join(documentId);
+      console.log(`User ${userId} joined document ${documentId}`);
+    });
+
     // ! User edits the document
 
     socket.on(
