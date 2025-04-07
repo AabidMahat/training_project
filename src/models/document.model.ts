@@ -35,6 +35,12 @@ export default class Document {
   })
   documentUrl: string;
 
+  @Column({
+    type: "bit",
+    default: true,
+  })
+  isActive: boolean;
+
   @CreateDateColumn()
   createdAt: Date;
 

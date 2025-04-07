@@ -149,6 +149,30 @@ class WorkspaceController {
       });
     }
   }
+
+  async updateWorkspace(req: Request, res: Response) {
+    try {
+      const workspace = await workspaceService.updateWOrkspace(
+        req.params.workspaceId,
+        req.body.name
+      );
+
+      if (!workspace.affected) {
+        res.status(501).json({
+          message: "Error while updating data",
+        });
+        return;
+      }
+      res.status(203).json({
+        message: "Data updated Suceesfully",
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: "Something went wrong",
+        err: (error as Error).message,
+      });
+    }
+  }
 }
 
 export default new WorkspaceController();

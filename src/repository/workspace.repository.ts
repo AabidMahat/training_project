@@ -52,6 +52,15 @@ class WorkSpaceRepository {
   }
 
   async getWorkspaceById(workspaceId: string) {
+    // return await getRepository(Workspace)
+    //   .createQueryBuilder("workspace")
+    //   .leftJoinAndSelect("workspace.document", "documents")
+    //   .leftJoinAndSelect("workspace.workspaceUser", "workspaceUser")
+    //   .where("document.isActive")
+    //   .getMany();
+
+    getRepository(Workspace).find({where:{document:{isActive:true}}})
+
     return await getRepository(Workspace).findOne({
       where: {
         id: workspaceId,
@@ -94,6 +103,17 @@ class WorkSpaceRepository {
         },
       },
     });
+  }
+
+  async updateWorkspace(workspaceId: string, name: string) {
+    return await getRepository(Workspace).update(
+      {
+        id: workspaceId,
+      },
+      {
+        name,
+      }
+    );
   }
 }
 

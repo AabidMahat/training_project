@@ -21,6 +21,7 @@ class DocumentRepository {
     return await getRepository(Document).findOne({
       where: {
         id: documentId,
+        isActive: true,
       },
       relations: ["workspace"],
     });
@@ -30,10 +31,18 @@ class DocumentRepository {
     return await getRepository(Document).save(document);
   }
 
-  async deleteDocument(documentId: number) {
-    return await getRepository(Document).delete({
-      id: documentId,
-    });
+  async deleteDocument(documentId: number, userId: number) {
+    return await getRepository(Document).update(
+      {
+        id: documentId,
+        user: {
+          id: userId,
+        },
+      },
+      {
+        isActive: false,
+      }
+    );
   }
 
   async updateDocument(documentId: number, content: string) {

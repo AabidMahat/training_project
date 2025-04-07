@@ -54,6 +54,9 @@ class WorkspaceService {
   async getOwnerWorkspace(ownerId: number) {
     return await workspaceRepository.getOwnerWorkspace(ownerId);
   }
+  async updateWOrkspace(workspaceId: string, name: string) {
+    return await workspaceRepository.updateWorkspace(workspaceId, name);
+  }
 }
 
 export default new WorkspaceService();

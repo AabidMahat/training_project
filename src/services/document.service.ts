@@ -68,8 +68,8 @@ class DocumentService {
     return document;
   }
 
-  async deleteDocument(documentId: number) {
-    return await documentRepository.deleteDocument(documentId);
+  async deleteDocument(documentId: number, userId: number) {
+    return await documentRepository.deleteDocument(documentId, userId);
   }
 
   async updateDocument(documentId: number, content: string, userId: number) {

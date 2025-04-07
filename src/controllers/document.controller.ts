@@ -113,7 +113,8 @@ class DocumentController {
   async deleteDocument(req: Request, res: Response) {
     try {
       const document = await documentService.deleteDocument(
-        +req.params.documentId
+        +req.params.documentId,
+        +req.params.userId
       );
 
       if (!document.affected) {
@@ -165,7 +166,9 @@ class DocumentController {
   async getOwnerDocuments(req: Request, res: Response) {
     try {
       // const user = (req as AuthRequest).user as User;
-      const ownerDocuments = await documentService.getOwnerDocuments(+req.params.userId);
+      const ownerDocuments = await documentService.getOwnerDocuments(
+        +req.params.userId
+      );
 
       if (ownerDocuments.length === 0) {
         throw new AppError("No Document is created", 503);

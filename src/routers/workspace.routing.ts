@@ -24,4 +24,8 @@ router
 
 router.route("/ownerWorkspace").post(workspaceController.getOwnerWorkspaceData);
 
+router
+  .route("/update-workspace/:workspaceId")
+  .patch(workspaceController.updateWorkspace);
+
 export { router as workSpaceRouting };
