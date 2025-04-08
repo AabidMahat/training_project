@@ -1,19 +1,13 @@
 import { createTransport } from "nodemailer";
 import { MailOptions } from "nodemailer/lib/json-transport";
 
-import dotev from "dotenv";
-
-dotev.config({
-  path: "../config.env",
-});
-
 export const sendMail = async (receiverEmail: string, resetLink: string) => {
   try {
     const transporter = createTransport({
       service: "gmail",
       auth: {
-        user: process.env.EMAIL_USERNAME,
-        pass: process.env.EMAIL_PASSWORD,
+        user: "aabidmahat95@gmail.com",
+        pass: "kwrj mpfb ighp cbaz",
       },
     });
 
@@ -21,76 +15,227 @@ export const sendMail = async (receiverEmail: string, resetLink: string) => {
       <!DOCTYPE html>
       <html>
       <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Password Reset</title>
         <style>
-          body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+          @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+          
+          * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
           }
-          .email-container {
-            background-color: #ffffff;
-            margin: 20px auto;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-          }
-          .header {
-            background-color: #4CAF50;
-            padding: 10px;
-            text-align: center;
-            color: #ffffff;
-            border-radius: 8px 8px 0 0;
-          }
-          .header h1 {
-            margin: 0;
-            font-size: 24px;
-          }
-          .content {
-            padding: 20px;
+          
+          body {
+            font-family: 'Poppins', Arial, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
             line-height: 1.6;
-            color: #333333;
           }
+          
+          .email-wrapper {
+            background-color: #f5f7fa;
+            padding: 30px 15px;
+            min-height: 100vh;
+          }
+          
+          .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+          }
+          
+          .email-header {
+            background: linear-gradient(135deg, #3949ab 0%, #1e88e5 100%);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+          }
+          
+          .logo {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+          }
+          
+          .email-header p {
+            font-size: 16px;
+            opacity: 0.95;
+          }
+          
+          .email-body {
+            padding: 40px;
+          }
+          
+          .greeting {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+          }
+          
+          .message {
+            font-size: 15px;
+            color: #555;
+            margin-bottom: 30px;
+          }
+          
           .button-container {
             text-align: center;
-            margin-top: 20px;
+            margin: 35px 0;
           }
-          .button {
-            background-color: #4CAF50;
-            color: #ffffff;
+          
+          .reset-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #3949ab 0%, #1e88e5 100%);
+            color: white;
             text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+            padding: 14px 40px;
+            border-radius: 50px;
             font-size: 16px;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(30, 136, 229, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
           }
-          .button:hover {
-            background-color: #45a049;
+          
+          .reset-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(30, 136, 229, 0.4);
           }
-          .footer {
+          
+          .expiry-notice {
             text-align: center;
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 30px;
+          }
+          
+          .alternative {
+            margin-top: 25px;
+            font-size: 14px;
+            color: #666;
+          }
+          
+          .reset-link {
+            word-break: break-all;
+            color: #1e88e5;
+            font-size: 13px;
+            margin-top: 10px;
+          }
+          
+          .divider {
+            height: 1px;
+            background-color: #eeeeee;
+            margin: 30px 0;
+          }
+          
+          .security-notice {
+            background-color: #f8f9fa;
+            border-left: 4px solid #ffca28;
+            padding: 15px;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 25px;
+            border-radius: 0 4px 4px 0;
+          }
+          
+          .security-notice strong {
+            color: #555;
+            display: block;
+            margin-bottom: 5px;
+          }
+          
+          .email-footer {
+            background-color: #f5f7fa;
+            padding: 20px 40px;
+            text-align: center;
+          }
+          
+          .company-info {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 10px;
+          }
+          
+          .footer-links {
+            margin-top: 15px;
+          }
+          
+          .footer-link {
+            color: #1e88e5;
+            text-decoration: none;
+            font-size: 13px;
+            margin: 0 10px;
+          }
+          
+          .copyright {
             margin-top: 20px;
             font-size: 12px;
-            color: #888888;
+            color: #aaa;
+          }
+          
+          @media only screen and (max-width: 600px) {
+            .email-header, .email-body, .email-footer {
+              padding: 20px;
+            }
+            
+            .greeting {
+              font-size: 18px;
+            }
+            
+            .reset-button {
+              padding: 12px 30px;
+              font-size: 15px;
+            }
           }
         </style>
       </head>
       <body>
-        <div class="email-container">
-          <div class="header">
-            <h1>Collaboration</h1>
-          </div>
-          <div class="content">
-            <p>Hi there,</p>
-            <p>We received a request to reset your password. Please use the link below to set a new password. This link is valid for the next 10 minutes.</p>
-            <div class="button-container">
-              <a href="${resetLink}" class="button">Reset Password</a>
+        <div class="email-wrapper">
+          <div class="email-container">
+            <div class="email-header">
+              <div class="logo">Collaboration</div>
+              <p>Password Reset Request</p>
             </div>
-            <p>If you did not request a password reset, please ignore this email or contact support if you have concerns.</p>
-            <p>Thank you,<br>The Collaboration Team</p>
-          </div>
-          <div class="footer">
-            <p>&copy; 2025 Collaboration. All rights reserved.</p>
+            
+            <div class="email-body">
+              <div class="greeting">Hello there,</div>
+              
+              <p class="message">We received a request to reset your password for your Collaboration account. To create a new password, click the button below.</p>
+              
+              <div class="button-container">
+                <a href="${resetLink}" class="reset-button">Reset My Password</a>
+              </div>
+              
+              <p class="expiry-notice">This link is valid for the next 10 minutes only.</p>
+              
+              <div class="security-notice">
+                <strong>Security tip:</strong>
+                For your protection, if you did not request a new password or believe you received this email in error, please disregard this message or contact our support team immediately.
+              </div>
+              
+              <p class="alternative">If you're having trouble with the button above, copy and paste the URL below into your web browser:</p>
+              <p class="reset-link">http://localhost:4200/reset-password/${resetLink}</p>
+              
+              <div class="divider"></div>
+              
+              <p style="font-size: 15px; color: #555;">Thank you,<br><strong>The Collaboration Team</strong></p>
+            </div>
+            
+            <div class="email-footer">
+              <p class="company-info">Collaboration Inc. • Making teamwork seamless</p>
+              <div class="footer-links">
+                <a href="#" class="footer-link">Help Center</a>
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+              </div>
+              <p class="copyright">&copy; 2025 Collaboration. All rights reserved.</p>
+            </div>
           </div>
         </div>
       </body>
@@ -98,17 +243,19 @@ export const sendMail = async (receiverEmail: string, resetLink: string) => {
     `;
 
     const mailOptions: MailOptions = {
-      from: process.env.EMAIL_USERNAME,
+      from: "aabidmahat95@gmail.com",
       to: receiverEmail,
-      subject: "Forgot Password (Valid for 10 mins)",
-      text: "We received a request to reset your password. Please use the link below.",
-      html: htmlContent, // Embed the HTML template here
+      subject: "Reset Your Collaboration Password",
+      text:
+        "We received a request to reset your password. This link is valid for 10 minutes: " +
+        resetLink,
+      html: htmlContent,
     };
 
     const mailSend = await transporter.sendMail(mailOptions);
 
-    console.log("Mail sent to ", mailSend.messageId);
+    console.log("Password reset email sent successfully:", mailSend.messageId);
   } catch (error) {
-    console.log(error);
+    console.error("Failed to send password reset email:", error);
   }
 };

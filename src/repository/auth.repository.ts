@@ -38,6 +38,7 @@ class UserRepository {
       },
       {
         password,
+        passwordChangeAt: new Date(),
       }
     );
   }

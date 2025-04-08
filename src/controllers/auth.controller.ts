@@ -76,6 +76,32 @@ class UserController {
       });
     }
   }
+
+  async resetPassword(req: Request, res: Response) {
+    try {
+      const { resetToken } = req.params;
+      const { password } = req.body;
+
+      console.log({
+        resetToken,
+      });
+
+      const user = await authService.resetPassword(resetToken, password);
+
+      if (!user) {
+        throw new AppError("No user with this email", 404);
+      }
+
+      res.status(200).json({
+        message: "Password Reset Successfully",
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: "Something went wrong",
+        err: (error as Error).message,
+      });
+    }
+  }
 }
 
 export default new UserController();

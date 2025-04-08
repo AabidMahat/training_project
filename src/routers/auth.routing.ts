@@ -7,5 +7,6 @@ router.route("/register").post(authController.registerUser);
 router.route("/login").post(authController.logInuser);
 
 router.route("/forget-password").post(authController.forgetPassword);
+router.route("/reset-password/:resetToken").post(authController.resetPassword);
 
 export { router as authRouting };

@@ -88,16 +88,14 @@ class UserService {
 
     user.resetToken = resetToken;
 
+    await sendMail(user.email, resetToken);
+
     const userData = await getRepository(User).save(user);
 
     return userData;
   }
 
-  async resetPassword(
-    resetToken: string,
-    password: string,
-    confirmPassword: string
-  ) {
+  async resetPassword(resetToken: string, password: string) {
     const user = await getRepository(User).findOne({
       where: {
         resetToken,
@@ -106,9 +104,6 @@ class UserService {
 
     if (!user) {
       throw new AppError("Invalid reset token", 401);
-    }
-    if (password !== confirmPassword) {
-      throw new AppError("Password are not same", 401);
     }
 
     const hashPassword = await bcrypt.hash(password, 14);
