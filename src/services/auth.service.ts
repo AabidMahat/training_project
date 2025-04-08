@@ -1,3 +1,6 @@
+import { getRepository } from "typeorm";
+import crypto from "crypto";
+
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { User } from "../models/user.model";
@@ -5,6 +8,8 @@ import userRepository from "../repository/auth.repository";
 import { validate } from "class-validator";
 import authRepository from "../repository/auth.repository";
 import { JWT_SECRET } from "../config/jwt.config";
+import AppError from "../utils/appError.utils";
+import { sendMail } from "../utils/email.utils";
 
 class UserService {
   async registerUser(user: Partial<User>) {
@@ -70,6 +75,45 @@ class UserService {
 
   async getUserById(id: number) {
     return await userRepository.getUserById(id);
+  }
+
+  async forgetPassword(email: string) {
+    const user = await authRepository.getUserByEmail(email);
+
+    if (!user) {
+      throw new AppError("No user with this email", 404);
+    }
+
+    const resetToken = crypto.createHash("sha256").digest("hex");
+
+    user.resetToken = resetToken;
+
+    const userData = await getRepository(User).save(user);
+
+    return userData;
+  }
+
+  async resetPassword(
+    resetToken: string,
+    password: string,
+    confirmPassword: string
+  ) {
+    const user = await getRepository(User).findOne({
+      where: {
+        resetToken,
+      },
+    });
+
+    if (!user) {
+      throw new AppError("Invalid reset token", 401);
+    }
+    if (password !== confirmPassword) {
+      throw new AppError("Password are not same", 401);
+    }
+
+    const hashPassword = await bcrypt.hash(password, 14);
+
+    return await authRepository.resetPassword(user.id, hashPassword);
   }
 }
 

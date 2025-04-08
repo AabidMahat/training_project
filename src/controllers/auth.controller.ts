@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import userService from "../services/auth.service";
 import authService from "../services/auth.service";
+import authRepository from "../repository/auth.repository";
+import AppError from "../utils/appError.utils";
+import { sendMail } from "../utils/email.utils";
 
 class UserController {
   async registerUser(req: Request, res: Response) {
@@ -50,6 +53,26 @@ class UserController {
       res.status(404).json({
         message: "Error while creating user",
         err: (err as Error).message,
+      });
+    }
+  }
+
+  async forgetPassword(req: Request, res: Response) {
+    try {
+      const { email } = req.body;
+
+      const user = await authService.forgetPassword(email);
+
+      if (!user) {
+        throw new AppError("No user with this email", 404);
+      }
+      res.status(200).json({
+        message: "Forgot Password mail Send to Your inbox",
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: "Something went wrong",
+        err: (error as Error).message,
       });
     }
   }

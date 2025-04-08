@@ -1,6 +1,11 @@
 import express, { NextFunction, Request, Response } from "express";
 import http from "http";
 import cors from "cors";
+import dotev from "dotenv";
+
+dotev.config({
+  path: "./config.env",
+});
 
 import { authRouting } from "./routers/auth.routing";
 import { documentRouting } from "./routers/document.routing";

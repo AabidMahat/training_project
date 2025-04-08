@@ -11,10 +11,9 @@ class ActivityService {
   async logDocumentActivity(
     action: string,
     userId: number,
-    document:Document
+    document: Document
   ) {
     const user = (await authService.getUserById(userId)) as User;
-    
 
     return await activityLogRepository.logActivity({ action, user, document });
   }
@@ -32,8 +31,8 @@ class ActivityService {
     return await activityLogRepository.logActivity({ action, user, workspace });
   }
 
-  async getActivities() {
-    return await activityLogRepository.getAllActivity();
+  async getActivities(page: number, limit: number) {
+    return await activityLogRepository.getAllActivity(page, limit);
   }
 }
 

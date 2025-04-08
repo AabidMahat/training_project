@@ -4,14 +4,16 @@ import activityService from "../services/activity.service";
 class ActivityController {
   async getAllActivity(req: Request, res: Response) {
     try {
-      const activities = await activityService.getActivities();
+      const { page = 1, limit = 10 } = req.query;
+
+      const activities = await activityService.getActivities(+page, +limit);
 
       if (activities.length === 0) {
         res.status(404).json({
           message: "No Activity Recorded",
         });
         return;
-      }
+      }                                            
 
       res.status(200).json({
         message: "Activity fetched",

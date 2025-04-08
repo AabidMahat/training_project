@@ -58,6 +58,8 @@ export class User {
   })
   passwordChangeAt: Date;
 
+  resetToken?: string;
+
   @CreateDateColumn()
   createdAt: Date;
 

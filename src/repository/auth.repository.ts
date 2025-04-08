@@ -22,6 +22,25 @@ class UserRepository {
       },
     });
   }
+
+  async forgetPassword(email: string) {
+    return getRepository(User).findOne({
+      where: {
+        email,
+      },
+    });
+  }
+
+  async resetPassword(id: number, password: string) {
+    return await getRepository(User).update(
+      {
+        id,
+      },
+      {
+        password,
+      }
+    );
+  }
 }
 
 export default new UserRepository();
