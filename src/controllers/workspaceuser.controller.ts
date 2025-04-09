@@ -83,7 +83,30 @@ class WorkSpaceuUerController {
         data: workspaceUsers,
       });
     } catch (error) {
-      res.status(404).json({
+      res.status(500).json({
+        message: "Something went wrong",
+        err: (error as Error).message,
+      });
+    }
+  }
+
+  async getUserByWorkspaceGroup(req: Request, res: Response) {
+    try {
+      const data = await workspaceUserService.getUserByWorkspaceGroup();
+
+      if (!data) {
+        res.status(404).json({
+          message: "No Data Found",
+        });
+        return;
+      }
+
+      res.status(200).json({
+        message: "Data Fetched",
+        data,
+      });
+    } catch (error) {
+      res.status(500).json({
         message: "Something went wrong",
         err: (error as Error).message,
       });

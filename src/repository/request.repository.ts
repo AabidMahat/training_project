@@ -42,9 +42,6 @@ class RequestRepository {
 
     request!.status = "rejected";
 
-
-    
-
     return await getRepository(Request).save(request!);
   }
 
@@ -52,6 +49,35 @@ class RequestRepository {
     return await getRepository(Request).find({
       relations: ["user", "workspace"],
     });
+  }
+
+  async requestByWorkspace() {
+    const request = await getRepository(Request)
+      .createQueryBuilder("request")
+      .leftJoinAndSelect("request.workspace", "workspace")
+      .orderBy("workspace.id")
+      .getMany();
+
+    const requestData = request.reduce((result: any, current) => {
+      const workspaceId = current.workspace.id;
+      const workspaceName = current.workspace.name;
+
+      if (!result[workspaceId]) {
+        result[workspaceId] = {
+          workspaceId,
+          workspaceName,
+          request: [],
+        };
+      }
+
+      result[workspaceId].request.push({
+        requestId: current.id,
+      });
+
+      return result;
+    }, {});
+
+    return requestData;
   }
 }
 

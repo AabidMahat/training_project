@@ -29,6 +29,10 @@ class RequestService {
   async showAllRequests() {
     return await requestRepository.showAllRequests();
   }
+
+  async showRequestByWorkspace() {
+    return await requestRepository.requestByWorkspace();
+  }
 }
 
 export default new RequestService();

@@ -58,6 +58,29 @@ class RequestController {
       });
     }
   }
+
+  async requestByWorkspaceGroup(req: Request, res: Response) {
+    try {
+      const requestData = await requestService.showRequestByWorkspace();
+
+      if (!requestData) {
+        res.status(404).json({
+          message: "No Request found",
+        });
+        return;
+      }
+
+      res.status(200).json({
+        message: "Request Fetched",
+        data: requestData,
+      });
+    } catch (error) {
+      res.status(404).json({
+        message: "Something went wrong",
+        err: (error as Error).message,
+      });
+    }
+  }
 }
 
 export default new RequestController();

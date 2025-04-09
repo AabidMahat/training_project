@@ -72,6 +72,10 @@ class WorkspaceUserService {
   async getUserByWorkspace(workspaceId: string) {
     return await workspaceUserRepository.getUserByWorkspaceId(workspaceId);
   }
+
+  async getUserByWorkspaceGroup() {
+    return await workspaceUserRepository.getUserByWorkspace();
+  }
 }
 
 export default new WorkspaceUserService();

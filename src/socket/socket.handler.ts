@@ -57,7 +57,7 @@ export const configureSocket = (io: Server) => {
         document.content = content;
         await documentService.saveDocument(document);
         await activityService.logDocumentActivity(
-          "save Document",
+          "save-Document",
           +userId,
           document
         );
@@ -93,7 +93,7 @@ export const configureSocket = (io: Server) => {
           socket.to(documentId).emit("updateDocument", content);
 
           await activityService.logDocumentActivity(
-            "edit Document",
+            "edit-document",
             +userId,
             document
           );

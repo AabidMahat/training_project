@@ -12,8 +12,8 @@ class ActivityRepository {
     const skip = (page - 1) * limit;
     return await getRepository(Activity).find({
       relations: ["user", "document", "workspace"],
-      skip,
-      take: limit,
+      // skip,
+      // take: limit,
     });
   }
 }

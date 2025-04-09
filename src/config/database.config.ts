@@ -10,13 +10,13 @@ const AppDataSource = async () => {
   try {
     const connection = await createConnection({
       type: "mssql",
-      host: "AABID",
-      port: 1433,
-      database: "master",
+      host: "dev.c5owyuw64shd.ap-south-1.rds.amazonaws.com",
+      port: 1982,
+      database: "JIBE_MAIN_TRAINING",
       entities: [User, Document, Activity, Workspace, WorkSpaceUser, Request],
-      username: "sa",
+      username: "j2",
       password: "123456",
-      synchronize: true,
+      synchronize: false,
       options: {
         encrypt: false,
         trustServerCertificate: true,

@@ -80,7 +80,7 @@ class DocumentService {
     })) as Document;
 
     await activityService.logDocumentActivity(
-      "update-document",
+      "edit-document",
       userId,
       document
     );

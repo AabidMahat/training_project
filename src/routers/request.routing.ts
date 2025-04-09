@@ -14,4 +14,8 @@ router
   .route("/showRequest")
   .get(roleBasedAuth("admin"), requestController.showAllRequest);
 
+router
+  .route("/getRequestByWorkspace")
+  .get(requestController.requestByWorkspaceGroup);
+
 export { router as requestRouting };

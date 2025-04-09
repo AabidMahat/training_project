@@ -253,6 +253,7 @@ export const sendMail = async (receiverEmail: string, resetLink: string) => {
     };
 
     const mailSend = await transporter.sendMail(mailOptions);
+    console.log(`http://localhost:4200/reset-password/${resetLink}`);
 
     console.log("Password reset email sent successfully:", mailSend.messageId);
   } catch (error) {
