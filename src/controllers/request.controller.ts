@@ -26,6 +26,30 @@ class RequestController {
     }
   }
 
+  async rejectRequest(req: Request, res: Response) {
+    try {
+      const { workspaceId, userId } = req.params;
+      const request = await requestService.rejectRequest(+userId, workspaceId);
+
+      if (!request) {
+        res.status(403).json({
+          message: "Something went wrong ..Please wait",
+        });
+        return;
+      }
+
+      res.status(202).json({
+        message: "Admin Rejected your Request",
+        data: request,
+      });
+    } catch (error) {
+      res.status(404).json({
+        message: "Something went wrong",
+        err: (error as Error).message,
+      });
+    }
+  }
+
   async removeUserFromWorkspaceRequest(req: Request, res: Response) {
     try {
     } catch (error) {

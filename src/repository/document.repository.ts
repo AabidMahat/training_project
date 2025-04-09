@@ -32,12 +32,13 @@ class DocumentRepository {
   }
 
   async deleteDocument(documentId: number, userId: number) {
+    console.log({
+      documentId,
+      userId,
+    });
     return await getRepository(Document).update(
       {
         id: documentId,
-        user: {
-          id: userId,
-        },
       },
       {
         isActive: false,

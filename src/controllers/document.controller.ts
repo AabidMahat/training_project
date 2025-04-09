@@ -116,7 +116,7 @@ class DocumentController {
         +req.params.documentId,
         +req.params.userId
       );
-
+      console.log(document);
       if (!document.affected) {
         res.status(403).json({
           message: "Cannot Delete Document",

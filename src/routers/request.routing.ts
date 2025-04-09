@@ -11,6 +11,10 @@ router
   .post(roleBasedAuth("admin"), requestController.approveRequest);
 
 router
+  .route("/reject/:workspaceId/:userId")
+  .post(roleBasedAuth("admin"), requestController.rejectRequest);
+
+router
   .route("/showRequest")
   .get(roleBasedAuth("admin"), requestController.showAllRequest);
 

@@ -72,6 +72,7 @@ class RequestRepository {
 
       result[workspaceId].request.push({
         requestId: current.id,
+        requestStatus: current.status,
       });
 
       return result;
