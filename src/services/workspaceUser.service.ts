@@ -58,7 +58,7 @@ class WorkspaceUserService {
 
   async removeUserFromWorkspace(workspaceId: string, userId: number) {
     await activityService.logWorkspaceActivity(
-      "remove-workspace-user",
+      "delete-workspace-user",
       userId,
       workspaceId
     );

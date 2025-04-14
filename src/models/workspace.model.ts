@@ -22,6 +22,12 @@ export class Workspace {
   })
   name: string;
 
+  @Column({
+    type: "bit",
+    default: false,
+  })
+  isPrivate: boolean;
+
   @OneToMany(() => Document, (document) => document.workspace)
   document: Document[];
 

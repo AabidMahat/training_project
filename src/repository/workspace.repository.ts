@@ -59,7 +59,7 @@ class WorkSpaceRepository {
     //   .where("document.isActive")
     //   .getMany();
 
-    getRepository(Workspace).find({where:{document:{isActive:true}}})
+    getRepository(Workspace).find({ where: { document: { isActive: true } } });
 
     return await getRepository(Workspace).findOne({
       where: {
@@ -105,13 +105,14 @@ class WorkSpaceRepository {
     });
   }
 
-  async updateWorkspace(workspaceId: string, name: string) {
+  async updateWorkspace(workspaceId: string, name: string, isPrivate: boolean) {
     return await getRepository(Workspace).update(
       {
         id: workspaceId,
       },
       {
         name,
+        isPrivate,
       }
     );
   }

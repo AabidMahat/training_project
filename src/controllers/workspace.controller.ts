@@ -115,7 +115,7 @@ class WorkspaceController {
         user.id
       );
 
-      if (!workspace.affected) {
+      if (!workspace) {
         throw new AppError("Cannot perform this action", 503);
       }
 
@@ -123,7 +123,10 @@ class WorkspaceController {
         message: "Workspace Removed",
       });
     } catch (error) {
-      throw new AppError((error as Error).message, 500);
+      res.status(500).json({
+        message: "Something went wrong",
+        err: (error as Error).message,
+      });
     }
   }
   async getOwnerWorkspaceData(req: Request, res: Response) {
@@ -154,7 +157,8 @@ class WorkspaceController {
     try {
       const workspace = await workspaceService.updateWOrkspace(
         req.params.workspaceId,
-        req.body.name
+        req.body.name,
+        req.body.isPrivate
       );
 
       if (!workspace.affected) {

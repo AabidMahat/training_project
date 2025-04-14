@@ -4,6 +4,7 @@ import documentRepository from "../repository/document.repository";
 import workspaceRepository from "../repository/workspace.repository";
 import workspaceUserRepository from "../repository/workspaceUser.repository";
 import activityService from "./activity.service";
+import AppError from "../utils/appError.utils";
 
 class DocumentService {
   async createDocument(document: Document, userId: number) {
@@ -69,7 +70,23 @@ class DocumentService {
   }
 
   async deleteDocument(documentId: number, userId: number) {
+    const isOwnerPresent = await getRepository(Document).findOne({
+      where: {
+        id: documentId,
+        user: {
+          id: userId,
+        },
+      },
+    });
+
+    console.log(isOwnerPresent);
+
+    if (!isOwnerPresent) {
+      throw new AppError("You are not the owner of the document", 500);
+    }
+
     return await documentRepository.deleteDocument(documentId, userId);
+    // return isOwnerPresent;
   }
 
   async updateDocument(documentId: number, content: string, userId: number) {
@@ -80,7 +97,7 @@ class DocumentService {
     })) as Document;
 
     await activityService.logDocumentActivity(
-      "edit-document",
+      "update-document",
       userId,
       document
     );
