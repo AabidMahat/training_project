@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response } from "express";
 import http from "http";
 import cors from "cors";
 import dotev from "dotenv";
+import path from "path";
 
 dotev.config({
   path: "./config.env",
@@ -33,6 +34,8 @@ app.use(
     methods: ["GET", "POST", "PATCH", "DELETE"],
   })
 );
+
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 const server = http.createServer(app);
 

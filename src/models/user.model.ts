@@ -16,7 +16,7 @@ import { WorkSpaceUser } from "./workspaceUser.model";
 import { Request } from "./request.model";
 import { Workspace } from "./workspace.model";
 
-@Entity("user_table_26")
+@Entity("user_table_30")
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -63,6 +63,17 @@ export class User {
     nullable: true,
   })
   resetToken?: string;
+
+  @Column({
+    type: "bit",
+    default: 0,
+  })
+  isVerified: boolean;
+
+  @Column({
+    type: "varchar",
+  })
+  otp: string;
 
   @CreateDateColumn()
   createdAt: Date;

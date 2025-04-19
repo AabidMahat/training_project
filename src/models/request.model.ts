@@ -8,7 +8,13 @@ import {
 import { User } from "./user.model";
 import { Workspace } from "./workspace.model";
 
-@Entity("request_table_16")
+export enum Status {
+  Pending = "pending",
+  Approved = "approved",
+  Rejected = "rejected",
+}
+
+@Entity("request_table_20")
 export class Request {
   @PrimaryGeneratedColumn("uuid")
   id: number;
@@ -28,7 +34,7 @@ export class Request {
     type: "varchar",
     default: "pending",
   })
-  status: string;
+  status: Status;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -36,7 +42,7 @@ export class Request {
   @ManyToOne(() => User, (user) => user.requests)
   user: User;
 
-  @ManyToOne(() => Workspace, (workspace) => workspace.requests,{
+  @ManyToOne(() => Workspace, (workspace) => workspace.requests, {
     onDelete: "CASCADE",
   })
   workspace: Workspace;

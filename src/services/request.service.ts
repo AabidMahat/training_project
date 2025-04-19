@@ -1,5 +1,6 @@
 import { Request } from "../models/request.model";
 import requestRepository from "../repository/request.repository";
+import { sendWorkspaceNotification } from "../utils/email.utils";
 import workspaceUserService from "./workspaceUser.service";
 
 class RequestService {
@@ -16,6 +17,19 @@ class RequestService {
       request.requested_role
     );
 
+    console.log(
+      workspaceUser.workspace.owner.email,
+      workspaceUser.user.name,
+      workspaceUser.workspace.name,
+      request.requested_role
+    );
+
+    await sendWorkspaceNotification(
+      workspaceUser.workspace.owner.email,
+      workspaceUser.user.name,
+      workspaceUser.workspace.name,
+      request.requested_role
+    );
     console.log({
       workspaceUser,
     });

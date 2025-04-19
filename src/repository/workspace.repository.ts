@@ -59,13 +59,11 @@ class WorkSpaceRepository {
     //   .where("document.isActive")
     //   .getMany();
 
-    getRepository(Workspace).find({ where: { document: { isActive: true } } });
-
     return await getRepository(Workspace).findOne({
       where: {
         id: workspaceId,
       },
-      relations: ["document", "workspaceUser"],
+      relations: ["document", "workspaceUser", "owner"],
     });
   }
 
@@ -102,6 +100,7 @@ class WorkSpaceRepository {
           id: ownerId,
         },
       },
+      relations: ["document", "workspaceUser"],
     });
   }
 

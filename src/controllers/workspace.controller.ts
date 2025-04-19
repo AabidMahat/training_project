@@ -173,6 +173,7 @@ class WorkspaceController {
     } catch (error) {
       res.status(500).json({
         message: "Something went wrong",
+
         err: (error as Error).message,
       });
     }

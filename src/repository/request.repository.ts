@@ -1,5 +1,6 @@
 import { getRepository } from "typeorm";
-import { Request } from "../models/request.model";
+import { Request, Status } from "../models/request.model";
+import AppError from "../utils/appError.utils";
 
 class RequestRepository {
   async createRequest(request: Partial<Request>) {
@@ -19,11 +20,11 @@ class RequestRepository {
       },
     });
 
-    if (request?.status === "approved") {
-      throw new Error("Request is already Approved");
+    if (request?.status === Status.Approved) {
+      throw new AppError("Request is already Approved", 500);
     }
 
-    request!.status = "approved";
+    request!.status = Status.Approved;
 
     return await getRepository(Request).save(request!);
   }
@@ -40,7 +41,7 @@ class RequestRepository {
       },
     });
 
-    request!.status = "rejected";
+    request!.status = Status.Rejected;
 
     return await getRepository(Request).save(request!);
   }

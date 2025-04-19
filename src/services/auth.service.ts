@@ -9,7 +9,16 @@ import { validate } from "class-validator";
 import authRepository from "../repository/auth.repository";
 import { JWT_SECRET } from "../config/jwt.config";
 import AppError from "../utils/appError.utils";
-import { sendMail } from "../utils/email.utils";
+import { sendMail, sendVerifyAccountMail } from "../utils/email.utils";
+import { generate } from "otp-generator";
+
+const generateRandomOtp = () =>
+  generate(6, {
+    digits: true,
+    upperCaseAlphabets: false,
+    lowerCaseAlphabets: false,
+    specialChars: false,
+  });
 
 class UserService {
   async registerUser(user: Partial<User>) {
@@ -29,7 +38,11 @@ class UserService {
     const newUser = Object.assign(new User(), {
       ...user,
       password: hashPassword,
+      otp: generateRandomOtp(),
+      isVerified: false,
     });
+
+    await sendVerifyAccountMail(newUser.email, newUser.otp);
 
     const errors = await validate(newUser);
 
@@ -55,6 +68,10 @@ class UserService {
       throw new Error("Incorrect Email or Password");
     }
 
+    if (!user.isVerified) {
+      throw new AppError("Please verify the account", 500);
+    }
+
     const token = jwt.sign(
       {
         id: user.id,
@@ -67,6 +84,35 @@ class UserService {
     );
 
     return { token, user };
+  }
+
+  async verifyUser(otp: string) {
+    const user = await userRepository.verifyOtp(otp);
+
+    if (!user) {
+      throw new AppError("Invalid Otp", 500);
+    }
+    user.isVerified = true;
+
+    return await userRepository.saveUser(user);
+  }
+
+  async resendOtp(email: string) {
+    const user = await userRepository.getUserByEmail(email);
+
+    if (!user) {
+      throw new AppError("No user with this email", 500);
+    }
+
+    if (user.isVerified) {
+      throw new AppError("User is already verified", 500);
+    }
+
+    user.otp = generateRandomOtp();
+
+    await sendVerifyAccountMail(user.email, user.otp);
+
+    return await userRepository.saveUser(user);
   }
 
   async getUserByEmail(email: string) {
@@ -109,6 +155,10 @@ class UserService {
     const hashPassword = await bcrypt.hash(password, 14);
 
     return await authRepository.resetPassword(user.id, hashPassword);
+  }
+
+  async getAllUser() {
+    return await authRepository.getAllUser();
   }
 }
 

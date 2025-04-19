@@ -37,6 +37,47 @@ class UserController {
     }
   }
 
+  async verifyAccount(req: Request, res: Response) {
+    try {
+      const user = await authService.verifyUser(req.body.otp);
+
+      if (!user) {
+        res.status(404).json({
+          message: "Invalid Otp",
+        });
+        return;
+      }
+
+      res.status(200).json({
+        message: "User verfied successfully",
+      });
+    } catch (error) {
+      res.status(500).json({
+        err: (error as Error).message,
+      });
+    }
+  }
+
+  async resendOtp(req: Request, res: Response) {
+    try {
+      const user = await authService.resendOtp(req.body.email);
+      if (!user) {
+        res.status(404).json({
+          message: "No User found",
+        });
+        return;
+      }
+
+      res.status(200).json({
+        message: "Otp Resend Successfully",
+      });
+    } catch (error) {
+      res.status(500).json({
+        err: (error as Error).message,
+      });
+    }
+  }
+
   async logInuser(req: Request, res: Response) {
     try {
       const { token, user } = await authService.login(
@@ -98,6 +139,28 @@ class UserController {
     } catch (error) {
       res.status(500).json({
         message: "Something went wrong",
+        err: (error as Error).message,
+      });
+    }
+  }
+
+  async getAllUser(req: Request, res: Response) {
+    try {
+      const users = await authService.getAllUser();
+
+      if (!users) {
+        res.status(404).json({
+          message: "No user found",
+        });
+        return;
+      }
+
+      res.status(200).json({
+        message: "User fetched",
+        data: users,
+      });
+    } catch (error) {
+      res.status(500).json({
         err: (error as Error).message,
       });
     }

@@ -42,6 +42,22 @@ class UserRepository {
       }
     );
   }
+
+  async verifyOtp(otp: string) {
+    return await getRepository(User).findOne({
+      where: {
+        otp,
+      },
+    });
+  }
+
+  async saveUser(user: User) {
+    return await getRepository(User).save(user);
+  }
+
+  async getAllUser() {
+    return await getRepository(User).find();
+  }
 }
 
 export default new UserRepository();

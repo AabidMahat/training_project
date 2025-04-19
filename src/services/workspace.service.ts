@@ -70,6 +70,9 @@ class WorkspaceService {
     return await workspaceRepository.getOwnerWorkspace(ownerId);
   }
   async updateWOrkspace(workspaceId: string, name: string, isPrivate: boolean) {
+    console.log({
+      isPrivate,
+    });
     return await workspaceRepository.updateWorkspace(
       workspaceId,
       name,
