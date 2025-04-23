@@ -84,6 +84,15 @@ class DocumentService {
     if (!isOwnerPresent) {
       throw new AppError("You are not the owner of the document", 500);
     }
+    const document = (await documentRepository.getDocumentById(
+      documentId
+    )) as Document;
+
+    await activityService.logDocumentActivity(
+      "delete-document",
+      userId,
+      document
+    );
 
     return await documentRepository.deleteDocument(documentId, userId);
     // return isOwnerPresent;

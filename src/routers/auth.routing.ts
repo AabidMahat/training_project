@@ -17,4 +17,10 @@ router
   .route("/get-users")
   .get(authMiddleware, roleBasedAuth("admin"), authController.getAllUser);
 
+router.route("/chnage-status/:userId").post(
+  authMiddleware,
+  roleBasedAuth("admin"),
+
+  authController.changeActiveStatus
+);
 export { router as authRouting };

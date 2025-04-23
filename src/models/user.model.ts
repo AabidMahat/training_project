@@ -16,7 +16,7 @@ import { WorkSpaceUser } from "./workspaceUser.model";
 import { Request } from "./request.model";
 import { Workspace } from "./workspace.model";
 
-@Entity("user_table_30")
+@Entity("table_user")
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -69,6 +69,12 @@ export class User {
     default: 0,
   })
   isVerified: boolean;
+
+  @Column({
+    type: "bit",
+    default: 1,
+  })
+  isActive: boolean;
 
   @Column({
     type: "varchar",

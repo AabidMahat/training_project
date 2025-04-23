@@ -14,7 +14,7 @@ export enum Status {
   Rejected = "rejected",
 }
 
-@Entity("request_table_20")
+@Entity("table_request")
 export class Request {
   @PrimaryGeneratedColumn("uuid")
   id: number;

@@ -72,6 +72,13 @@ class UserService {
       throw new AppError("Please verify the account", 500);
     }
 
+    if (!user.isActive) {
+      throw new AppError(
+        "Account is Suspended. Please contact our supports",
+        500
+      );
+    }
+
     const token = jwt.sign(
       {
         id: user.id,
@@ -159,6 +166,14 @@ class UserService {
 
   async getAllUser() {
     return await authRepository.getAllUser();
+  }
+
+  async changeStatus(userId: number, isActive: boolean) {
+    const user = (await authRepository.getUserById(userId)) as User;
+
+    user!.isActive = isActive;
+
+    return await authRepository.saveUser(user);
   }
 }
 

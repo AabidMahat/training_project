@@ -165,6 +165,30 @@ class UserController {
       });
     }
   }
+
+  async changeActiveStatus(req: Request, res: Response) {
+    try {
+      const { userId } = req.params;
+      const { isActive } = req.body;
+      const user = await authService.changeStatus(+userId, isActive);
+
+      if (!user) {
+        res.status(404).json({
+          message: "Error while updating user",
+        });
+        return;
+      }
+
+      res.status(200).json({
+        message: "Status Changed Successfully",
+        data: user,
+      });
+    } catch (error) {
+      res.status(500).json({
+        err: (error as Error).message,
+      });
+    }
+  }
 }
 
 export default new UserController();
