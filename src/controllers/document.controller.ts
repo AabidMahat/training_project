@@ -186,6 +186,60 @@ class DocumentController {
       });
     }
   }
+
+  async changeDocumentStatus(req: Request, res: Response) {
+    try {
+      const { documentId } = req.params;
+      const { status } = req.body;
+
+      const document = await documentService.changeDocumentStatus(
+        +documentId,
+        status
+      );
+
+      if (!document.affected) {
+        res.status(404).json({
+          message: "No document with this id",
+        });
+        return;
+      }
+
+      res.status(202).json({
+        message: "Document updated successfully",
+        data: document,
+      });
+    } catch (error) {
+      res.status(500).json({
+        err: (error as Error).message,
+      });
+    }
+  }
+
+  async getAllDocuments(req: Request, res: Response) {
+    try {
+      const documents = await documentService.getAllDocuments();
+
+      console.log({
+        documents,
+      });
+
+      if (documents.length === 0) {
+        res.status(404).json({
+          message: "No Document found",
+        });
+        return;
+      }
+
+      res.status(200).json({
+        message: "Document fetched",
+        data: documents,
+      });
+    } catch (error) {
+      res.status(500).json({
+        err: (error as Error).message,
+      });
+    }
+  }
 }
 
 export default new DocumentController();

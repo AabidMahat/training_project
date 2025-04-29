@@ -64,6 +64,23 @@ class DocumentRepository {
       },
     });
   }
+
+  async changeDocumentStatus(documentId: number, status: boolean) {
+    return await getRepository(Document).update(
+      {
+        id: documentId,
+      },
+      {
+        isActive: status,
+      }
+    );
+  }
+
+  async getAllDocuments() {
+    return await getRepository(Document).find({
+      relations: ["user", "workspace"],
+    });
+  }
 }
 
 export default new DocumentRepository();

@@ -117,6 +117,14 @@ class DocumentService {
   async getOwnerDocuments(userId: number) {
     return await documentRepository.getOwnerDocuments(userId);
   }
+
+  async changeDocumentStatus(documentId: number, status: boolean) {
+    return await documentRepository.changeDocumentStatus(documentId, status);
+  }
+
+  async getAllDocuments() {
+    return await documentRepository.getAllDocuments();
+  }
 }
 
 export default new DocumentService();
